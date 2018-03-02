@@ -1,0 +1,66 @@
+<div class="data-table-container" [style.height.px]="getTableHeight()">
+    <div class="data-table-col" *ngFor="let col of columns; index as colIndex; let last = last" [style.width.%]="getColumnWidth(col)">
+        <div class="col-head-wrapper">
+            <span class="data-table-col-header">{{getColumnHeader(col)}}</span>
+            <div class="sorting-container">
+                <i class="material-icons mat-14  clickable" (click)="sortAsc(col)">&#xE316;</i>
+                <i class="material-icons mat-14  clickable" (click)="sortDesc(col)">&#xE313;</i>
+            </div>
+        </div>
+        <div *ngFor="let item of currentSlice; index as recordIndex" class="data-table-col-cell">
+            <span *ngIf="!isEditMode(recordIndex, col)">{{getColumnValue(col, item)}}</span>
+            <div *ngIf="isEditMode(recordIndex, col)">
+                <div class="data-table-col-edit-mode-wrapper">
+
+                    <div *ngIf="getType(col) === 'select'">
+                        <!-- The column is of type select and is editable, render a select component in the cell. -->
+                        <mat-select [placeholder]="getPlaceholder(col)" [(ngModel)]="item[col.getAttribute('accessor')]">
+                            <mat-option *ngFor="let el of getItems(colIndex)" [value]="el">
+                                {{ el }}
+                            </mat-option>
+                        </mat-select>
+                    </div>
+
+                    <div *ngIf="getType(col) === 'text'">
+                        <!-- The column is of type text and is editable, render an input component in the cell. -->
+                        <mat-form-field>
+                            <input matInput [placeholder]="getPlaceholder(col)" [(ngModel)]="item[col.getAttribute('accessor')]">
+                        </mat-form-field>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="editable" class="data-table-col" style="width: 25px">
+        <div class="data-table-col-header"></div>
+        <div *ngFor="let item of currentSlice; index as recordIndex" class="data-table-col-cell data-table-icon-cell">
+            <div>
+                <i *ngIf="editIndex !== recordIndex" matTooltip="Edit" class="material-icons mat-18 clickable" (click)="editRecord(recordIndex)">&#xE3C9;</i>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="editable" class="data-table-col" style="width: 25px">
+        <div class="data-table-col-header"></div>
+        <div *ngFor="let item of currentSlice; index as recordIndex" class="data-table-col-cell data-table-icon-cell">
+            <i *ngIf="editIndex !== recordIndex" matTooltip="Delete" (click)="onDelete(recordIndex)" class="material-icons mat-18 clickable">&#xE92B;</i>
+            <i *ngIf="editIndex === recordIndex" matTooltip="Done" (click)="onDone(recordIndex)" class="material-icons mat-18 done-btn clickable">&#xE876;</i>
+        </div>
+    </div>
+</div>
+
+<div class="table-actions-row">
+    <div class="col secondary clickable page-btn" *ngIf="pageSize && data && data.length > pageSize" matTooltip="next" (click)="goNext()"
+        [ngClass]="{'disabled': !canGoNext()}">
+        <i class="material-icons">&#xE315;</i>
+    </div>
+    <div class="col secondary clickable page-btn" *ngIf="pageSize && data && data.length > pageSize" matTooltip="previous" (click)="goPrevious()"
+        [ngClass]="{'disabled': !canGoPrevious()}">
+        <i class="material-icons">&#xE314;</i>
+    </div>
+    <div class="col secondary" *ngIf="pageSize && data && data.length > pageSize">
+        {{getPageText()}}
+    </div>
+</div>
+
+<ng-content></ng-content>

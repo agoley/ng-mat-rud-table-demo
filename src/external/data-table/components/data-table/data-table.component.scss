@@ -1,0 +1,93 @@
+// Import theming functions
+@import '~@angular/material/theming';
+.data-table-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.sorting-container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    bottom: 2px;
+    left: 2px;
+}
+
+.col-head-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+div.data-table-col {
+    display: inline-block;
+    text-align: left;
+    margin: 5px 0;
+    height: 30px;
+}
+
+div.data-table-col-cell {
+    display: block;
+    width: 100%;
+    padding: 5px 0;
+    height: 30px;
+}
+
+.data-table-col-header {
+    height: 20px;
+}
+
+.done-btn {
+    position: relative;
+    top: 6px;
+}
+
+.data-table-col-sort-up {
+    position: relative;
+    bottom: 1px;
+    left: 2px;
+}
+
+.data-table-col-sort-down {
+    position: relative;
+    top: 7px;
+    right: 16px;
+}
+
+.table-actions-row {
+    display: flex;
+    flex-direction: row-reverse;
+    div.col {
+        display: inline-block;
+        font-size: 12px;
+        padding: 0 3px;
+    }
+    .page-btn {
+        i {
+            font-size: 18px !important;
+            position: relative;
+            top: 2px;
+        }
+    }
+    .page-btn.disabled {
+        opacity: 0.25;
+    }
+}
+
+.mat-14 {
+    font-size: 14px;
+}
+
+.mat-18 {
+    font-size: 18px;
+}
+
+.clickable {
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+:host /deep/ .mat-input-infix {
+    border: none !important;
+}

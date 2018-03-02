@@ -1,0 +1,10 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div class="container">
+  <data-table [data]="data" editable="true" (saveRecord)="onUpdate($event)" (deleteRecord)="onDelete($event)" pageSize="5">
+    <data-table-column header="Color" accessor="color" type="text" editable="true"></data-table-column>
+    <data-table-column header="Value" accessor="value" type="text" editable="true"></data-table-column>
+  </data-table>
+</div>
+
+<h2>{{action}}</h2>
+<p>{{event}}</p>
